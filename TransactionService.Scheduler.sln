@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionService.Scheduler", "TransactionService.Scheduler\TransactionService.Scheduler.csproj", "{090E0C05-E0DF-4F5B-87C7-BF478CE8D3CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionService.Scheduler.Domain", "TransactionService.Scheduler.Domain\TransactionService.Scheduler.Domain.csproj", "{9D39B141-5924-42BC-978C-7A5279E4DF4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionService.Scheduler.Repository", "TransactionService.Scheduler.Repository\TransactionService.Scheduler.Repository.csproj", "{5DE0F8C7-BD61-4310-818B-6E75D22E40DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionService.Scheduler.Services", "TransactionService.Scheduler.Services\TransactionService.Scheduler.Services.csproj", "{20C2FC05-7D6F-440C-BB7B-0087AF837E53}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionService.Scheduler.Test", "TransactionService.Scheduler.Test\TransactionService.Scheduler.Test.csproj", "{20C25BBF-9A82-437D-A8D5-F43153B8F54C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransactionService.Scheduler.Helper", "TransactionService.Scheduler.Helper\TransactionService.Scheduler.Helper.csproj", "{F63DA2CB-6D1F-41E6-91B4-CA83BDF38DD2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{090E0C05-E0DF-4F5B-87C7-BF478CE8D3CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{090E0C05-E0DF-4F5B-87C7-BF478CE8D3CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{090E0C05-E0DF-4F5B-87C7-BF478CE8D3CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{090E0C05-E0DF-4F5B-87C7-BF478CE8D3CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D39B141-5924-42BC-978C-7A5279E4DF4F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D39B141-5924-42BC-978C-7A5279E4DF4F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D39B141-5924-42BC-978C-7A5279E4DF4F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D39B141-5924-42BC-978C-7A5279E4DF4F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DE0F8C7-BD61-4310-818B-6E75D22E40DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DE0F8C7-BD61-4310-818B-6E75D22E40DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DE0F8C7-BD61-4310-818B-6E75D22E40DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DE0F8C7-BD61-4310-818B-6E75D22E40DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C2FC05-7D6F-440C-BB7B-0087AF837E53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C2FC05-7D6F-440C-BB7B-0087AF837E53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C2FC05-7D6F-440C-BB7B-0087AF837E53}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C2FC05-7D6F-440C-BB7B-0087AF837E53}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C25BBF-9A82-437D-A8D5-F43153B8F54C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C25BBF-9A82-437D-A8D5-F43153B8F54C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C25BBF-9A82-437D-A8D5-F43153B8F54C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C25BBF-9A82-437D-A8D5-F43153B8F54C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F63DA2CB-6D1F-41E6-91B4-CA83BDF38DD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F63DA2CB-6D1F-41E6-91B4-CA83BDF38DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F63DA2CB-6D1F-41E6-91B4-CA83BDF38DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F63DA2CB-6D1F-41E6-91B4-CA83BDF38DD2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
