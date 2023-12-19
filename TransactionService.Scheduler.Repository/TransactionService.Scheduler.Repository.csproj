@@ -11,4 +11,10 @@
       <ProjectReference Include="..\TransactionService.Scheduler.Helper\TransactionService.Scheduler.Helper.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.8.1" />
+      <PackageReference Include="Flurl.Http" Version="4.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    </ItemGroup>
+
 </Project>

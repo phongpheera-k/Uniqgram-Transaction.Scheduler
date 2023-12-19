@@ -1,4 +1,4 @@
-namespace TransactionService.Scheduler.Services.Services.Implements;
+namespace TransactionService.Scheduler.Services.Services.Interfaces;
 
 public interface IMathService
 {

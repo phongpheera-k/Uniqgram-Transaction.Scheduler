@@ -1,6 +1,6 @@
-using TransactionService.Scheduler.Services.Services.Implements;
+using TransactionService.Scheduler.Services.Services.Interfaces;
 
-namespace TransactionService.Scheduler.Services.Services.Interfaces;
+namespace TransactionService.Scheduler.Services.Services.Implements;
 
 public class MathService : IMathService
 {
