@@ -5,4 +5,5 @@ namespace TransactionService.Scheduler.Repository.InternalApi.Interfaces;
 public interface IDepositServiceApi
 {
     Task<bool> ScheduleProc(PostScheduleProcRequest request);
+    Task<string> DepVersion();
 }

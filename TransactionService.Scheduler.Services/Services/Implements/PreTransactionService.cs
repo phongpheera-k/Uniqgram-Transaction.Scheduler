@@ -15,7 +15,11 @@ public class PreTransactionService : IPreTransactionService
     
     public async Task<bool> CallApiDepositScheduleProc(PostScheduleProcRequest request)
     {
-        // var result = await _depositServiceApi.ScheduleProc(request);
         return await _depositServiceApi.ScheduleProc(request);
+    }
+
+    public Task<string> CallApiDepositVersion()
+    {
+        return _depositServiceApi.DepVersion();
     }
 }

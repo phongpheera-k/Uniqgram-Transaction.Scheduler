@@ -1,4 +1,5 @@
 using System.Globalization;
+using Flurl.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -25,8 +26,9 @@ public class TransactionScheduler : IHostedService, IDisposable
         _mathService = mathService;
         _preTransactionService = preTransactionService;
         var getSetting = configuration.GetSection("ScheduleFrequency");
-        var getSetting2 = configuration.GetValue<string>("ScheduleFrequency", "24h")!;
+        var getSetting2 = configuration.GetValue<string>("ScheduleFrequency", "5s")!;
         _scheduleFrequency = TimeSpanExpressions.ParseToTimeSpan(getSetting2);
+        
     }
     
     public Task StartAsync(CancellationToken cancellationToken)
@@ -45,20 +47,33 @@ public class TransactionScheduler : IHostedService, IDisposable
         // _logger.LogInformation($"Transaction scheduler executing at {DateTime.Now:h:mm:ss tt zz}");
         // _countState = await _mathService.Count(_countState, 2);
         // _logger.LogInformation($"count at {_countState}");
-        var postScheduleProcRequest = new PostScheduleProcRequest() { OperDate = DateTime.Now};
+        // var postScheduleProcRequest = new PostScheduleProcRequest() { OperDate = DateTime.Now};
         // var result = await _preTransactionService.CallApiDepositScheduleProc(postScheduleProcRequest);
-        // var testDate = DateTime.ParseExact("06/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture);
-        // var postScheduleProcRequest = new PostScheduleProcRequest() { OperDate = testDate};
+        
+        var testDate = DateTime.ParseExact("06/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        var postScheduleProcRequest = new PostScheduleProcRequest() { OperDate = testDate};
         try
         {
             var result = await _preTransactionService.CallApiDepositScheduleProc(postScheduleProcRequest);
             _logger.LogInformation($"result is {result}");
         }
-        catch (Exception e)
+        catch (FlurlHttpException ex)
         {
-            _logger.LogError(e.Message);
+            // Log Flurl.Http exception
+            Console.WriteLine($"Flurl.Http exception: {ex.Message}");
         }
         
+        // try
+        // {
+        //     var result = _preTransactionService.CallApiDepositVersion();
+        //     _logger.LogInformation($"{result}");
+        // }
+        // catch (Exception e)
+        // {
+        //     _logger.LogError(e.Message);
+        // }
+        
+
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
