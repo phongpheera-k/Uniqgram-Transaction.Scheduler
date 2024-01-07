@@ -1,4 +1,6 @@
-﻿using Flurl;
+﻿using System.Text;
+using System.Text.Json;
+using Flurl;
 using Flurl.Http;
 using Microsoft.Extensions.Configuration;
 using TransactionService.Scheduler.Repository.InternalApi.Interfaces;
@@ -9,53 +11,52 @@ namespace TransactionService.Scheduler.Repository.InternalApi.Implements;
 public class DepositServiceApi : IDepositServiceApi
 {
     private readonly string _depositServiceUrl;
-
     public DepositServiceApi(IConfiguration configuration)
     {
-        _depositServiceUrl = configuration["ApiInternal:Deposit"] ?? "https://localhost:7201";
+        _depositServiceUrl = configuration["ApiInternal:Deposit"]!;
     }
-
-
     public async Task<bool> ScheduleProc(PostScheduleProcRequest request)
     {
-        // public async Task<string> GetVersion() => await _depositServiceUrl
-        //     .AppendPathSegment("version")
-        //     .GetStringAsync();
-        return await _depositServiceUrl
+        HttpClient client = CreateHttpClient();
+        HttpContent content = CreateHttpContent(request);
+        
+        string requestUrl = _depositServiceUrl
             .AppendPathSegment("Transaction")
-            .AppendPathSegment("scheduleproc")
-            .PostJsonAsync(request)
-            // .ReceiveString();
-        .ReceiveJson<bool>();
+            .AppendPathSegment("scheduleproc");
+
+        var response = await client.PostAsync(requestUrl, content);
+        return await HandleResponse(response);
     }
 
+    private HttpClient CreateHttpClient()
+    {
+        var clientHandler = new HttpClientHandler();
+        clientHandler.ServerCertificateCustomValidationCallback = (_, _, _, _) => true;
+        return new HttpClient(clientHandler);
+    }
+    
+    private HttpContent CreateHttpContent(PostScheduleProcRequest request)
+    {
+        var jsonString = JsonSerializer.Serialize(request);
+        return new StringContent(jsonString, Encoding.UTF8, "application/json");
+    }
+
+    private async Task<bool> HandleResponse(HttpResponseMessage response)
+    {
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new InvalidOperationException($"Error: {response.StatusCode}");
+        }
+
+        var result = await response.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<bool>(result);
+    }
+    
     public Task<string> DepVersion()
     {
         return _depositServiceUrl
             .AppendPathSegment("Version")
             .GetStringAsync();
     }
-    
-//     try
-//     {
-//         var response = await "https://api.example.com"
-//             .AppendPathSegment("data")
-//             .WithOAuthBearerToken("your_access_token")
-//             .GetAsync();
-//
-//         if (response.IsSuccessStatusCode)
-//         {
-//             string responseBody = await response.Content.ReadAsStringAsync();
-//             Console.WriteLine(responseBody);
-//         }
-//         else
-//         {
-//             Console.WriteLine($"Request failed: {response.StatusCode}");
-//         }
-//     }
-//     catch (FlurlHttpException ex)
-// {
-//     Console.WriteLine($"Flurl.Http exception: {ex.Message}");
-// }
     
 }

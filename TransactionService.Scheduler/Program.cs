@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Flurl.Http.Configuration;
-using Microsoft.Extensions.Logging;
 using NLog.Extensions.Logging;
 using TransactionService.Scheduler.Repository.InternalApi.Implements;
 using TransactionService.Scheduler.Repository.InternalApi.Interfaces;

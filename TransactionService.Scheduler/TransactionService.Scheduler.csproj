@@ -5,7 +5,6 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -17,6 +16,12 @@
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
       <PackageReference Include="NLog.Extensions.Logging" Version="5.3.7" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="appsettings.json" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="appsettings.*.json" CopyToOutputDirectory="PreserveNewest" />
+        <Content Include="NLog.config" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 
 </Project>
