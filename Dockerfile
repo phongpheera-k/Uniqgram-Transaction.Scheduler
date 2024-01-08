@@ -16,4 +16,5 @@ RUN dotnet publish "TransactionService.Scheduler\TransactionService.Scheduler.cs
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+ENV ASPNETCORE_ENVIRONMENT Production
 ENTRYPOINT ["dotnet", "TransactionService.Scheduler.dll"]
