@@ -1,4 +1,5 @@
 # Uniqgram-TransactionService.Scheduler
+scheduler for transaction service
 
 # How to run on Docker
 type this follow command

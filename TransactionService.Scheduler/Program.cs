@@ -38,8 +38,5 @@ var host = Host.CreateDefaultBuilder(args).ConfigureAppConfiguration((_, config)
     })
     .Build();
 
-//get environment
-// var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
 await host.RunAsync();
 
