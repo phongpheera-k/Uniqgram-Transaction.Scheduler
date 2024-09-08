@@ -15,7 +15,9 @@ public class TransactionScheduler : IHostedService, IDisposable
 {
     private readonly ILogger<TransactionScheduler> _logger;
     private readonly IPreTransactionService _preTransactionService;
+    private readonly bool _useFrequencyNotTime;
     private readonly TimeSpan _scheduleFrequency;
+    private readonly DateTime _scheduleTime;
     private Timer? _timer;
 
     public TransactionScheduler(ILogger<TransactionScheduler> logger, 
@@ -23,19 +25,35 @@ public class TransactionScheduler : IHostedService, IDisposable
     {
         _logger = logger;
         _preTransactionService = preTransactionService;
+        _useFrequencyNotTime = bool.Parse(configuration.GetSection("Schedule:UseFrequencyNotTime").Value!);
         _scheduleFrequency = TimeSpanExpressions.ParseToTimeSpan(
-            configuration.GetSection("ScheduleFrequency").Value!);
+            configuration.GetSection("Schedule:Frequency").Value!);
+        _scheduleTime = DateTime.ParseExact(configuration.GetSection("Schedule:Time").Value!, "HH:mm", 
+            CultureInfo.CurrentCulture);
     }
     
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        _logger.LogInformation($"Transaction scheduler is starting at {DateTime.Now:h:mm:ss tt zz}");
-        _timer = new Timer(AsyncWrapper, null, TimeSpan.Zero, _scheduleFrequency);
+        _logger.LogInformation($"Transaction scheduler service is starting at {DateTime.Now:h:mm:ss tt zz}");
+        _timer = SetTimer(AsyncWrapper, null);
 
         return Task.CompletedTask;
     }
+    
+    private Timer SetTimer(Action action, object? state)
+    {
+        if (_useFrequencyNotTime)
+            return new Timer(_ => action(), state, TimeSpan.Zero, _scheduleFrequency);
 
-    private void AsyncWrapper(object? state) => Task.Run(Execution);
+        var scheduleTime = _scheduleTime.TimeOfDay;
+        var currentTime = DateTime.Now.TimeOfDay;
+        var timeToGo = scheduleTime > currentTime ? 
+            scheduleTime - currentTime : 
+            scheduleTime - currentTime + TimeSpan.FromDays(1);
+        return new Timer(_ => action(), state, timeToGo, TimeSpan.FromDays(1));
+    }
+
+    private void AsyncWrapper() => Task.Run(Execution);
 
     private async Task Execution()
     {
@@ -45,7 +63,8 @@ public class TransactionScheduler : IHostedService, IDisposable
         // var postScheduleProcRequest = new PostScheduleProcRequest() { OperDate = DateTime.Now};
         // var result = await _preTransactionService.CallApiDepositScheduleProc(postScheduleProcRequest);
         
-        var testDate = DateTime.ParseExact("06/10/2023", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        // var postScheduleProcRequest = new PostScheduleProcRequest() { OperDate = DateTime.Now};
+        var testDate = DateTime.ParseExact("08/09/2024", "dd/MM/yyyy", CultureInfo.InvariantCulture);
         var postScheduleProcRequest = new PostScheduleProcRequest { OperDate = testDate};
         try
         {
