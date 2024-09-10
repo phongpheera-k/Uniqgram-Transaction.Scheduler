@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -57,19 +58,15 @@ public class TransactionScheduler : IHostedService, IDisposable
 
     private async Task Execution()
     {
-        // _logger.LogInformation($"Transaction scheduler executing at {DateTime.Now:h:mm:ss tt zz}");
-        // _countState = await _mathService.Count(_countState, 2);
-        // _logger.LogInformation($"count at {_countState}");
-        // var postScheduleProcRequest = new PostScheduleProcRequest() { OperDate = DateTime.Now};
-        // var result = await _preTransactionService.CallApiDepositScheduleProc(postScheduleProcRequest);
         
-        // var postScheduleProcRequest = new PostScheduleProcRequest() { OperDate = DateTime.Now};
-        var testDate = DateTime.ParseExact("08/09/2024", "dd/MM/yyyy", CultureInfo.InvariantCulture);
-        var postScheduleProcRequest = new PostScheduleProcRequest { OperDate = testDate};
+        var postScheduleProcRequest = new PostScheduleProcRequest() { OperDate = DateTime.Now};
+        // var testDate = DateTime.ParseExact("10/09/2024", "dd/MM/yyyy", CultureInfo.InvariantCulture);
+        // var postScheduleProcRequest = new PostScheduleProcRequest { OperDate = testDate};
         try
         {
             var result = await _preTransactionService.CallApiDepositScheduleProc(postScheduleProcRequest);
             _logger.LogInformation($"[logs]result is {result}");
+            _logger.LogInformation($"[logs] result is {result}, OS: {RuntimeInformation.OSDescription}");
         }
         catch (Exception ex)
         {

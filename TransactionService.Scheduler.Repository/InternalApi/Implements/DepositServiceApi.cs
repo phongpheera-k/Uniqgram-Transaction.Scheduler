@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.InteropServices;
+using System.Text;
 using System.Text.Json;
 using Flurl;
 using Flurl.Http;
@@ -13,7 +14,9 @@ public class DepositServiceApi : IDepositServiceApi
     private readonly string _depositServiceUrl;
     public DepositServiceApi(IConfiguration configuration)
     {
-        _depositServiceUrl = configuration["ApiInternal:Deposit"]!;
+        _depositServiceUrl = RuntimeInformation.IsOSPlatform(OSPlatform.Linux)
+            ? configuration["ApiInternal:LinuxDeposit"]!
+            : configuration["ApiInternal:Deposit"]!;
     }
     public async Task<bool> ScheduleProc(PostScheduleProcRequest request)
     {
