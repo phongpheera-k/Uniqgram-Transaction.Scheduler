@@ -21,14 +21,28 @@ public class DepositServiceApi : IDepositServiceApi
     public async Task<bool> ScheduleProc(PostScheduleProcRequest request)
     {
         HttpClient client = CreateHttpClient();
+        client.Timeout = TimeSpan.FromMinutes(5);
         HttpContent content = CreateHttpContent(request);
         
         string requestUrl = _depositServiceUrl
             .AppendPathSegment("Transaction")
             .AppendPathSegment("scheduleproc");
 
-        var response = await client.PostAsync(requestUrl, content);
-        return await HandleResponse(response);
+        for (int i = 0; i < 3; i++)
+        {
+            try
+            {
+                var response = await client.PostAsync(requestUrl, content);
+                return await HandleResponse(response);
+            }
+            catch (TaskCanceledException ex) when (ex.InnerException is TimeoutException)
+            {
+                // Log หรือทำบางอย่างถ้าเกิด timeout
+                if (i == 2) throw; // ถ้า retry ครบ 3 ครั้งแล้วค่อย throw error
+            }
+        }
+
+        return false; // เผื่อมีการ fall-through
     }
 
     private HttpClient CreateHttpClient()
